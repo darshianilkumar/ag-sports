@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>ArenaFlow | Smart Court Booking</title>
+    <link rel="icon" href="{% static 'images/rs.png' %}">
+    <!-- Google Fonts + Font Awesome 6 -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f1f5f9 0%, #e6edf4 100%);
+            color: #0f172a;
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        /* modern navbar with glassmorphism */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(16px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255,255,255,0.6);
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand i {
+            font-size: 1.8rem;
+            background: linear-gradient(145deg, #0f2b3d, #2563eb);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .brand span {
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: -0.3px;
+            background: linear-gradient(135deg, #1e293b, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.8rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 600;
+            color: #1e293b;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 0;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-links a i {
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: #2563eb;
+            border-bottom-color: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        /* main booking container - dynamic image & form combination */
+        .booking-wrapper {
+            max-width: 1280px;
+            margin: 2rem auto;
+            padding: 1rem 2rem;
+        }
+
+        .booking-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2.5rem;
+            align-items: flex-start;
+        }
+
+        /* Left side: image gallery / court inspiration (Google Images style) */
+        .visual-panel {
+            flex: 1.1;
+            min-width: 260px;
+            background: white;
+            border-radius: 2rem;
+            padding: 1rem;
+            box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.15);
+            transition: all 0.2s;
+        }
+
+        .court-gallery h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .court-gallery h3 i {
+            color: #3b82f6;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .gallery-card {
+            border-radius: 1.5rem;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.2s;
+            cursor: pointer;
+            background: #f8fafc;
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 25px -12px rgba(0, 0, 0, 0.2);
+        }
+
+        .gallery-card img {
+            width: 100%;
+            height: 130px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s;
+        }
+
+        .gallery-card:hover img {
+            transform: scale(1.02);
+        }
+
+        .gallery-card p {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-align: center;
+            padding: 8px 4px;
+            background: white;
+            color: #1e293b;
+        }
+
+        /* right side - form styling (modern, attractive) */
+        .form-panel {
+            flex: 1;
+            min-width: 320px;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(2px);
+            border-radius: 2rem;
+            padding: 2rem 2rem;
+            box-shadow: 0 30px 45px -20px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255,255,255,0.7);
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 1.8rem;
+        }
+
+        .form-header h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(145deg, #0f172a, #2563eb);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        .form-header p {
+            color: #475569;
+            margin-top: 6px;
+        }
+
+        /* crispy form styling (dynamic, matches Google design) */
+        .booking-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #334155;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-group label i {
+            color: #3b82f6;
+            width: 18px;
+        }
+
+        .form-group input, 
+        .form-group select, 
+        .form-group textarea {
+            padding: 12px 16px;
+            border-radius: 20px;
+            border: 1.5px solid #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            background: #ffffff;
+        }
+
+        .form-group input:focus, 
+        .form-group select:focus, 
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 4px rgba(59,130,246,0.15);
+        }
+
+        button[type="submit"] {
+            background: linear-gradient(95deg, #2563eb, #1d4ed8);
+            border: none;
+            padding: 14px 18px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 1rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 12px;
+            box-shadow: 0 8px 18px rgba(37, 99, 235, 0.25);
+        }
+
+        button[type="submit"]:hover {
+            transform: translateY(-3px);
+            background: linear-gradient(95deg, #1d4ed8, #1e40af);
+            box-shadow: 0 15px 25px -8px #2563eb70;
+        }
+
+        .success-message {
+            background: #dcfce7;
+            border-left: 6px solid #22c55e;
+            padding: 14px 20px;
+            border-radius: 24px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 500;
+            color: #166534;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* misc extras */
+        .court-tip {
+            background: #fef9c3;
+            border-radius: 1rem;
+            padding: 10px 12px;
+            margin-top: 20px;
+            font-size: 0.75rem;
+            color: #854d0e;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        @media (max-width: 780px) {
+            .booking-wrapper {
+                padding: 1rem;
+            }
+            .form-panel {
+                padding: 1.5rem;
+            }
+            .nav-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* animation for dynamic elements */
+        .dynamic-badge {
+            display: inline-block;
+            background: #eef2ff;
+            border-radius: 40px;
+            padding: 4px 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- sticky navigation with preserved Django URLs -->
+    <nav class="glass-nav">
+        <div class="nav-container">
+            <div class="brand">
+                <i class="fas fa-basketball"></i>
+                <span>CourtMaster</span>
+            </div>
+            <div class="nav-links">
+                <a href="{% url 'home' %}"><i class="fas fa-home"></i> Home</a>
+                <a href="{% url 'register' %}"><i class="fas fa-user-plus"></i> Register</a>
+                <a href="{% url 'contact' %}"><i class="fas fa-headset"></i> Contact</a>
+                <a href="{% url 'about' %}"><i class="fas fa-info-circle"></i> About</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="booking-wrapper">
+        <div class="booking-grid">
+            <!-- LEFT SIDE: DYNAMIC GALLERY - Google Images style references (high quality stock) -->
+            <div class="visual-panel">
+                <div class="court-gallery">
+                    <h3><i class="fas fa-images"></i> Premium courts <span class="dynamic-badge">trending</span></h3>
+                    <div class="gallery-grid" id="dynamicCourtGallery">
+                        <!-- Images will be injected via JS but we predefine stunning references (Google Images inspiration) -->
+                    </div>
+                    <div class="court-tip">
+                        <i class="fas fa-lightbulb"></i> <span id="randomCourtTip">Click on any image for court inspiration ✨</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT SIDE: Booking Form with enhanced styling and success message -->
+            <div class="form-panel">
+                <div class="form-header">
+                    <h1><i class="fas fa-calendar-check"></i> court_booking</h1>
+                    <p>Secure your spot • fast & easy reservation</p>
+                </div>
+
+                <!-- dynamic success message block with icon -->
+                {% if success_message %}
+                <div class="success-message" id="dynamicSuccessMsg">
+                    <i class="fas fa-check-circle" style="font-size: 1.3rem;"></i> 
+                    <span>{{ success_message }}</span>
+                    <button onclick="this.parentElement.style.display='none'" style="background:none; border:none; margin-left:auto; cursor:pointer; color:#15803d;"><i class="fas fa-times"></i></button>
+                </div>
+                {% endif %}
+
+                <form method="POST" class="booking-form" id="bookingForm">
+                    {% csrf_token %}
+                    <!-- Rendering Django form fields with custom styling (dynamic but preserving {{ forms.as_p }} structure enhanced) -->
+                    <div class="form-fields-custom">
+                        {{ forms.as_p }}
+                    </div>
+                    <button type="submit"><i class="fas fa-check-double"></i> confirm booking</button>
+                </form>
+                <div style="margin-top: 20px; font-size: 0.7rem; text-align: center; color: #64748b;">
+                    <i class="fas fa-shield-alt"></i> 100% secure · real-time availability
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Override default paragraph styling from Django forms.as_p to match modern UI */
+        .form-fields-custom p {
+            margin-bottom: 1rem;
+        }
+        .form-fields-custom label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 5px;
+        }
+        .form-fields-custom input, 
+        .form-fields-custom select, 
+        .form-fields-custom textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 20px;
+            border: 1.5px solid #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.2s;
+        }
+        .form-fields-custom input:focus {
+            border-color: #3b82f6;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+        }
+        .form-fields-custom .helptext {
+            font-size: 0.7rem;
+            color: #6c757d;
+            display: block;
+            margin-top: 4px;
+        }
+        .errorlist {
+            color: #dc2626;
+            font-size: 0.75rem;
+            list-style: none;
+            margin-top: 5px;
+        }
+    </style>
+
+    <script>
+        // -------------------- DYNAMIC COURT GALLERY (Google Images style references) --------------------
+        // High-quality images of courts and sports arenas (free stock from Pexels/Unsplash, dynamic & modern)
+        const courtImages = [
+            {
+                url: "https://images.pexels.com/photos/2099779/pexels-photo-2099779.jpeg?auto=compress&cs=tinysrgb&w=400",
+                name: "Pro Basketball Court",
+                style: "Hardwood lighting"
+            },
+            {
+                url: "https://images.pexels.com/photos/260024/pexels-photo-260024.jpeg?auto=compress&cs=tinysrgb&w=400",
+                name: "Tennis Champions",
+                style: "Clay court"
+            },
+            {
+                url: "https://images.pexels.com/photos/1752757/pexels-photo-1752757.jpeg?auto=compress&cs=tinysrgb&w=400",
+                name: "Urban Streetball",
+                style: "Outdoor vibe"
+            },
+            {
+                url: "https://images.pexels.com/photos/6034351/pexels-photo-6034351.jpeg?auto=compress&cs=tinysrgb&w=400",
+                name: "Beach Volley",
+                style: "Summer sport"
+            },
+            {
+                url: "https://images.pexels.com/photos/3471423/pexels-photo-3471423.jpeg?auto=compress&cs=tinysrgb&w=400",
+                name: "Badminton Arena",
+                style: "Indoor action"
+            },
+            {
+                url: "https://images.pexels.com/photos/260024/pexels-photo-260024.jpeg?auto=compress&cs=tinysrgb&w=400",
+                name: "Padel Premium",
+                style: "Fast & fun"
+            }
+        ];
+
+        // Remove potential duplicates: unique images but we keep variety, just ensure dynamic set
+        const uniqueCourts = [];
+        const map = new Map();
+        for (const court of courtImages) {
+            if (!map.has(court.url)) {
+                map.set(court.url, court);
+                uniqueCourts.push(court);
+            }
+        }
+        const finalGallery = uniqueCourts.slice(0, 6);
+
+        function renderDynamicGallery() {
+            const galleryContainer = document.getElementById('dynamicCourtGallery');
+            if (!galleryContainer) return;
+            galleryContainer.innerHTML = '';
+            finalGallery.forEach((item, idx) => {
+                const card = document.createElement('div');
+                card.className = 'gallery-card';
+                card.setAttribute('data-court-name', item.name);
+                card.innerHTML = `
+                    <img src="${item.url}" alt="${item.name}" loading="lazy">
+                    <p><i class="fas fa-crown" style="color:#f59e0b; font-size:0.65rem;"></i> ${item.name}</p>
+                `;
+                // interactive: click to show tip about court style and fill some form fantasy (dynamic)
+                card.addEventListener('click', () => {
+                    showInteractiveCourtTip(item.name, item.style);
+                    // also create a micro animation on form
+                    const formField = document.querySelector('input[name$="court"]') || document.querySelector('select');
+                    if (formField && formField.tagName === 'INPUT') {
+                        formField.value = item.name;
+                        highlightElement(formField);
+                        showFloatingMessage(`✨ "${item.name}" selected — ready to book!`);
+                    } else if (formField && formField.tagName === 'SELECT') {
+                        // try to set if option exists
+                        for(let i=0; i<formField.options.length; i++) {
+                            if(formField.options[i].text.toLowerCase().includes(item.name.toLowerCase().split(' ')[0])) {
+                                formField.selectedIndex = i;
+                                break;
+                            }
+                        }
+                        highlightElement(formField);
+                        showFloatingMessage(`🎾 Court style inspired: ${item.style}`);
+                    } else {
+                        showFloatingMessage(`🏆 ${item.name} · ${item.style} — great choice!`);
+                    }
+                });
+                galleryContainer.appendChild(card);
+            });
+        }
+
+        function highlightElement(el) {
+            if(!el) return;
+            el.style.transition = 'all 0.2s';
+            el.style.boxShadow = '0 0 0 3px #facc15';
+            el.style.borderColor = '#facc15';
+            setTimeout(() => {
+                el.style.boxShadow = '';
+                el.style.borderColor = '#e2e8f0';
+            }, 800);
+        }
+
+        function showInteractiveCourtTip(courtName, style) {
+            const tipSpan = document.getElementById('randomCourtTip');
+            if (tipSpan) {
+                tipSpan.innerHTML = `🏀 ${courtName} · ${style} style — book now and feel the energy!`;
+                setTimeout(() => {
+                    tipSpan.innerHTML = 'Click on any image for court inspiration ✨';
+                }, 3000);
+            }
+            // also show toast message
+            showFloatingMessage(`📸 "${courtName}" — premium ${style} court, top quality.`);
+        }
+
+        // floating message utility (attractive & modern)
+        function showFloatingMessage(msg) {
+            const toast = document.createElement('div');
+            toast.innerText = msg;
+            toast.style.position = 'fixed';
+            toast.style.bottom = '25px';
+            toast.style.left = '50%';
+            toast.style.transform = 'translateX(-50%)';
+            toast.style.backgroundColor = '#0f172a';
+            toast.style.color = 'white';
+            toast.style.padding = '12px 24px';
+            toast.style.borderRadius = '60px';
+            toast.style.fontWeight = '500';
+            toast.style.fontSize = '0.85rem';
+            toast.style.zIndex = '2000';
+            toast.style.backdropFilter = 'blur(12px)';
+            toast.style.background = 'rgba(15, 23, 42, 0.92)';
+            toast.style.fontFamily = 'Inter, sans-serif';
+            toast.style.boxShadow = '0 10px 20px rgba(0,0,0,0.2)';
+            toast.style.pointerEvents = 'none';
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 2000);
+        }
+
+        // Additional dynamic: random court tip on page load
+        function randomCourtInspiration() {
+            const randomIndex = Math.floor(Math.random() * finalGallery.length);
+            const randomCourt = finalGallery[randomIndex];
+            const tipSpan = document.getElementById('randomCourtTip');
+            if (tipSpan) {
+                tipSpan.innerHTML = `🔥 Hot pick: ${randomCourt.name} · ${randomCourt.style} court. Try it today!`;
+                setTimeout(() => {
+                    tipSpan.innerHTML = 'Click on any image for court inspiration ✨';
+                }, 4000);
+            }
+        }
+
+        // dynamic form field enhancement: add placeholder and icons to input fields from Django generated form
+        function enhanceFormFields() {
+            const labels = document.querySelectorAll('.form-fields-custom label');
+            labels.forEach(label => {
+                // add icons dynamically
+                const text = label.innerText.toLowerCase();
+                if (text.includes('name') || text.includes('username')) {
+                    label.innerHTML = `<i class="fas fa-user"></i> ${label.innerText}`;
+                } else if (text.includes('email')) {
+                    label.innerHTML = `<i class="fas fa-envelope"></i> ${label.innerText}`;
+                } else if (text.includes('court') || text.includes('court type')) {
+                    label.innerHTML = `<i class="fas fa-basketball"></i> ${label.innerText}`;
+                } else if (text.includes('date') || text.includes('booking date')) {
+                    label.innerHTML = `<i class="fas fa-calendar-alt"></i> ${label.innerText}`;
+                } else if (text.includes('time') || text.includes('slot')) {
+                    label.innerHTML = `<i class="fas fa-clock"></i> ${label.innerText}`;
+                } else {
+                    label.innerHTML = `<i class="fas fa-edit"></i> ${label.innerText}`;
+                }
+            });
+            // add placeholder to inputs for better UX
+            const inputs = document.querySelectorAll('.form-fields-custom input, .form-fields-custom select, .form-fields-custom textarea');
+            inputs.forEach(input => {
+                if (input.tagName === 'INPUT' && input.type !== 'submit' && input.type !== 'button') {
+                    if (!input.placeholder) {
+                        const prevLabel = input.closest('p')?.querySelector('label')?.innerText;
+                        if (prevLabel) input.placeholder = `Enter ${prevLabel.toLowerCase().replace(/[^a-z0-9 ]/g,'')}`;
+                        else input.placeholder = 'Provide details';
+                    }
+                }
+                if (input.tagName === 'SELECT') {
+                    input.style.cursor = 'pointer';
+                }
+            });
+        }
+
+        // animated submit feedback
+        function attachSubmitAnimation() {
+            const form = document.getElementById('bookingForm');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    const btn = form.querySelector('button[type="submit"]');
+                    if (btn) {
+                        btn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Processing...';
+                        setTimeout(() => {
+                            // but if form submits normally, page reloads. This is just UX
+                        }, 10);
+                    }
+                });
+            }
+        }
+
+        // image error fallback for gallery (robust)
+        function fixBrokenGalleryImages() {
+            const images = document.querySelectorAll('.gallery-card img');
+            images.forEach(img => {
+                img.addEventListener('error', function() {
+                    this.src = "https://images.pexels.com/photos/260024/pexels-photo-260024.jpeg?auto=compress&cs=tinysrgb&w=400";
+                });
+            });
+        }
+
+        // dynamic success message auto hide after 5 sec
+        function autoHideSuccess() {
+            const msgDiv = document.getElementById('dynamicSuccessMsg');
+            if(msgDiv && !msgDiv.hasAttribute('data-auto-hidden')) {
+                setTimeout(() => {
+                    if(msgDiv && msgDiv.style.display !== 'none') {
+                        msgDiv.style.opacity = '0';
+                        setTimeout(() => {
+                            if(msgDiv) msgDiv.style.display = 'none';
+                        }, 400);
+                    }
+                }, 5000);
+                msgDiv.setAttribute('data-auto-hidden', 'true');
+            }
+        }
+
+        // Initialization
+        function initBookingPage() {
+            renderDynamicGallery();
+            enhanceFormFields();
+            attachSubmitAnimation();
+            fixBrokenGalleryImages();
+            randomCourtInspiration();
+            autoHideSuccess();
+            // additional dynamic stats: changing gallery tips every 12 seconds
+            setInterval(() => {
+                const randomIdx = Math.floor(Math.random() * finalGallery.length);
+                const tipElem = document.getElementById('randomCourtTip');
+                if (tipElem && tipElem.innerText.includes('Click on any image') === false) {
+                    // don't interrupt user hover tip too aggressively, only if default msg
+                } else if (tipElem && tipElem.innerText.includes('Click on any image')) {
+                    tipElem.innerHTML = `🎯 Did you know? ${finalGallery[randomIdx].name} has premium lighting. Book now!`;
+                    setTimeout(() => {
+                        if(tipElem) tipElem.innerHTML = 'Click on any image for court inspiration ✨';
+                    }, 4000);
+                }
+            }, 10000);
+        }
+
+        initBookingPage();
+    </script>
+</body>
+</html>

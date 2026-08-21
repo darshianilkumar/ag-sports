@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, initial-scale=1.0, viewport-fit=cover">
+    <title>AG SPORTS | Dynamic Homepage</title>
+    <!-- Google Fonts & Modern CSS Reset -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(145deg, #f8fafc 0%, #eef2f9 100%);
+            color: #0a2540;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        /* modern glassmorphic navbar */
+        .navbar {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.03), 0 2px 4px rgba(0, 0, 0, 0.02);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255,255,255,0.5);
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .brand {
+            font-weight: 800;
+            font-size: 1.65rem;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #0f2b3d, #2563eb);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.8rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 600;
+            color: #1e293b;
+            transition: all 0.25s ease;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 0;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-links a i {
+            font-size: 1.05rem;
+            transition: transform 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #2563eb;
+            border-bottom-color: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        .nav-links a:hover i {
+            transform: translateX(3px);
+        }
+
+        /* hero section with dynamic image grid */
+        .hero {
+            max-width: 1280px;
+            margin: 2rem auto 3rem;
+            padding: 1rem 2rem;
+        }
+
+        .hero-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .hero-text {
+            flex: 1.2;
+            min-width: 260px;
+        }
+
+        .hero-text .badge {
+            background: #e0f2fe;
+            color: #0369a1;
+            display: inline-block;
+            padding: 0.25rem 1rem;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            margin-bottom: 1rem;
+        }
+
+        .hero-text h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            background: linear-gradient(to right, #0f172a, #2d4a8c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .hero-text p {
+            font-size: 1.1rem;
+            color: #334155;
+            margin-bottom: 2rem;
+            max-width: 90%;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+            padding: 0.75rem 1.8rem;
+            border-radius: 40px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 8px rgba(37, 99, 235, 0.2);
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid #cbd5e1;
+            padding: 0.75rem 1.8rem;
+            border-radius: 40px;
+            font-weight: 600;
+            text-decoration: none;
+            color: #1e293b;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-outline:hover {
+            border-color: #2563eb;
+            background: #f1f5f9;
+            transform: translateY(-2px);
+        }
+
+        /* Image carousel / gallery section - dynamic google images style (high quality placeholders) */
+        .gallery-section {
+            max-width: 1280px;
+            margin: 2rem auto 3rem;
+            padding: 1rem 2rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #a855f7);
+            border-radius: 4px;
+        }
+
+        .gallery-sub {
+            color: #475569;
+            margin-bottom: 2rem;
+            margin-top: 1rem;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.8rem;
+            margin-top: 1rem;
+        }
+
+        .image-card {
+            background: white;
+            border-radius: 28px;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            box-shadow: 0 12px 25px -12px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+
+        .image-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 30px -12px rgba(0,0,0,0.2);
+        }
+
+        .image-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            display: block;
+        }
+
+        .image-card:hover img {
+            transform: scale(1.02);
+        }
+
+        .card-caption {
+            padding: 1rem 1rem 1.2rem;
+        }
+
+        .card-caption h4 {
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #0f172a;
+        }
+
+        .card-caption p {
+            font-size: 0.85rem;
+            color: #475569;
+        }
+
+        /* dynamic stats / interactive area */
+        .stats-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 1.5rem;
+            background: linear-gradient(115deg, #ffffff, #f9fbfe);
+            border-radius: 48px;
+            padding: 2rem 2rem;
+            margin: 3rem auto;
+            max-width: 1280px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+
+        .stat-item {
+            text-align: center;
+            flex: 1;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #2563eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .stat-label {
+            font-weight: 500;
+            color: #334155;
+            margin-top: 8px;
+        }
+
+        /* footer */
+        .footer {
+            background: #0f172a;
+            color: #cbd5e6;
+            padding: 2rem 2rem;
+            margin-top: 3rem;
+            text-align: center;
+            border-radius: 32px 32px 0 0;
+        }
+
+        .footer-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .social-icons a {
+            color: #94a3b8;
+            margin: 0 10px;
+            font-size: 1.3rem;
+            transition: color 0.2s;
+        }
+
+        .social-icons a:hover {
+            color: white;
+        }
+
+        @media (max-width: 780px) {
+            .nav-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .hero-text h1 {
+                font-size: 2.4rem;
+            }
+            .hero-text p {
+                max-width: 100%;
+            }
+            .stats-row {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* micro-interactions */
+        .dynamic-bg {
+            transition: all 0.3s;
+        }
+        button, a {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- modern nav with fontawesome icons & dynamic feel -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo-area">
+                <i class="fas fa-compass logo-icon"></i>
+                <span class="brand">AG SPORTS</span>
+            </div>
+            <div class="nav-links">
+                <a href="{% url 'index' %}"><i class="fas fa-home"></i> Index</a>
+                <a href="{% url 'register' %}"><i class="fas fa-user-plus"></i> Register</a>
+                <a href="{% url 'contact' %}"><i class="fas fa-envelope"></i> Contact</a>
+                <a href="{% url 'about' %}"><i class="fas fa-info-circle"></i> About</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- hero with welcoming message and dynamic CTA -->
+        <div class="hero">
+            <div class="hero-grid">
+                <div class="hero-text">
+                    <div class="badge"><i class="fas fa-fire"></i> trending 2025</div>
+                    <h1>Welcome to <br>the future of <span style="background: linear-gradient(120deg, #2563eb, #7c3aed); -webkit-background-clip: text; background-clip: text; color: transparent;">home</span></h1>
+                    <p>Explore a dynamic, modern experience crafted with elegance. Discover stunning imagery, seamless navigation, and interactive energy.</p>
+                    <div class="cta-buttons">
+                        <a href="#" class="btn-primary" id="exploreBtn"><i class="fas fa-arrow-right"></i> Explore gallery</a>
+                        <a href="#" class="btn-outline" id="randomFactBtn"><i class="fas fa-lightbulb"></i> Surprise me</a>
+                    </div>
+                </div>
+                <!-- hero image replaced with unsplash high-quality reference image (google images style) -->
+                <div style="flex: 0.8; min-width: 220px;">
+                    <img src="https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Dynamic landscape" style="width:100%; border-radius: 40px; box-shadow: 0 20px 35px -12px rgba(0,0,0,0.2); object-fit: cover; height: 280px;">
+                </div>
+            </div>
+        </div>
+
+        <!-- dynamic gallery section that uses high quality, diverse images (reference google images concept) -->
+        <div class="gallery-section" id="gallery">
+            <h2 class="section-title"><i class="fas fa-images"></i> Visual inspiration</h2>
+            <p class="gallery-sub">Curated collection • vibrant & modern • Google Images aesthetic</p>
+            <div class="image-grid" id="dynamicImageGrid">
+                <!-- images injected via JS but also static fallback; fully dynamic later but we prefill with high-quality references -->
+            </div>
+        </div>
+
+        <!-- Stats area with fun dynamic counters -->
+        <div class="stats-row" id="statsSection">
+            <div class="stat-item">
+                <div class="stat-number"><span id="visitorsCount">0</span><i class="fas fa-globe"></i></div>
+                <div class="stat-label">Monthly visitors</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number"><span id="imagesCount">0</span><i class="fas fa-camera"></i></div>
+                <div class="stat-label">Curated images</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number"><span id="usersCount">0</span><i class="fas fa-users"></i></div>
+                <div class="stat-label">Active members</div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <span>© 2025 Horizon — dynamic homepage</span>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ----- DYNAMIC IMAGE ARRAY (Google images style — high resolution, attractive, modern) -----
+        // These images are from reliable free stock sources (Pexels & Unsplash) to simulate "google images" reference.
+const imageCollection = [
+    {
+        url: "https://images.pexels.com/photos/46798/the-ball-stadion-football-the-pitch-46798.jpeg?auto=compress&cs=tinysrgb&w=600",
+        title: "Football Fever",
+        desc: "Stadium lights, match-day energy, winning spirit"
+    },
+    {
+        url: "https://images.pexels.com/photos/248547/pexels-photo-248547.jpeg?auto=compress&cs=tinysrgb&w=600",
+        title: "Basketball Action",
+        desc: "Fast breaks, slam dunks, unstoppable motion"
+    },
+    {
+        url: "https://images.pexels.com/photos/863988/pexels-photo-863988.jpeg?auto=compress&cs=tinysrgb&w=600",
+        title: "Tennis Champion",
+        desc: "Power serves, precision shots, grand slam vibes"
+    },
+    {
+        url: "https://images.pexels.com/photos/1552252/pexels-photo-1552252.jpeg?auto=compress&cs=tinysrgb&w=600",
+        title: "Fitness Power",
+        desc: "Strength training, gym motivation, athlete mindset"
+    },
+    {
+        url: "https://images.pexels.com/photos/163452/basketball-dunk-blue-game-163452.jpeg?auto=compress&cs=tinysrgb&w=600",
+        title: "Victory Dunk",
+        desc: "High energy, competitive edge, game-winning shot"
+    },
+    {
+        url: "https://images.pexels.com/photos/34514/spot-runs-start-laufer.jpg?auto=compress&cs=tinysrgb&w=600",
+        title: "Track Sprint",
+        desc: "Speed, focus, determination at the finish line"
+    }
+];
+
+        // Function to render dynamic image grid
+        function renderImageGrid() {
+            const gridContainer = document.getElementById('dynamicImageGrid');
+            if (!gridContainer) return;
+            gridContainer.innerHTML = '';
+            imageCollection.forEach((img, idx) => {
+                const card = document.createElement('div');
+                card.className = 'image-card';
+                card.setAttribute('data-index', idx);
+                card.innerHTML = `
+                    <img src="${img.url}" alt="${img.title}" loading="lazy">
+                    <div class="card-caption">
+                        <h4><i class="fas fa-star" style="color:#fbbf24; font-size:0.8rem;"></i> ${img.title}</h4>
+                        <p>${img.desc}</p>
+                    </div>
+                `;
+                // Add click effect for interactivity: alert with dynamic message
+                card.addEventListener('click', () => {
+                    // subtle interactive feature (dynamic)
+                    const toastMsg = `✨ You clicked on "${img.title}" – inspired by Google Images quality.`;
+                    showFloatingMessage(toastMsg);
+                });
+                gridContainer.appendChild(card);
+            });
+            // update image counter in stats after render
+            const imgCounterSpan = document.getElementById('imagesCount');
+            if(imgCounterSpan) imgCounterSpan.innerText = imageCollection.length;
+        }
+
+        // small floating message for smooth feedback (non-intrusive)
+        function showFloatingMessage(msg) {
+            // Create temporary element
+            const toast = document.createElement('div');
+            toast.innerText = msg;
+            toast.style.position = 'fixed';
+            toast.style.bottom = '30px';
+            toast.style.left = '50%';
+            toast.style.transform = 'translateX(-50%)';
+            toast.style.backgroundColor = '#1e293b';
+            toast.style.color = 'white';
+            toast.style.padding = '12px 24px';
+            toast.style.borderRadius = '48px';
+            toast.style.fontSize = '0.9rem';
+            toast.style.fontWeight = '500';
+            toast.style.zIndex = '1000';
+            toast.style.backdropFilter = 'blur(12px)';
+            toast.style.background = 'rgba(15, 23, 42, 0.9)';
+            toast.style.boxShadow = '0 8px 20px rgba(0,0,0,0.2)';
+            toast.style.fontFamily = 'Inter, sans-serif';
+            toast.style.pointerEvents = 'none';
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 2000);
+        }
+
+        // dynamic counter animation
+        function animateCounter(elementId, targetValue, suffix = false) {
+            const element = document.getElementById(elementId);
+            if (!element) return;
+            let current = 0;
+            const increment = Math.ceil(targetValue / 40);
+            const interval = setInterval(() => {
+                current += increment;
+                if (current >= targetValue) {
+                    element.innerText = targetValue;
+                    clearInterval(interval);
+                } else {
+                    element.innerText = current;
+                }
+            }, 20);
+        }
+
+        // generate random visitor & users stats (dynamic)
+        function updateStatsDynamically() {
+            // visitors: random between 12.5k and 89k
+            const visitors = Math.floor(Math.random() * (85000 - 12500 + 1) + 12500);
+            // users count random between 3400 and 12800
+            const users = Math.floor(Math.random() * (12800 - 3400 + 1) + 3400);
+            animateCounter('visitorsCount', visitors);
+            animateCounter('usersCount', users);
+            // image count already set from imageCollection length (preserve)
+            const imgCountSpan = document.getElementById('imagesCount');
+            if(imgCountSpan && !imgCountSpan.innerText) imgCountSpan.innerText = imageCollection.length;
+            else if(imgCountSpan && imgCountSpan.innerText === "0") imgCountSpan.innerText = imageCollection.length;
+        }
+
+        // random fact / surprise feature
+        const funFacts = [
+            "🌟 Did you know? Our image gallery features dynamic references from high-res stock libraries!",
+            "🎨 Google Images indexes billions of photos, but we bring you handpicked visual stories.",
+            "⚡ This homepage uses modern glassmorphism + smooth counters for a lively experience.",
+            "📸 The hero image changes mood – dynamic and fresh, just like your next adventure.",
+            "🚀 Django url tags are fully preserved: index, register, contact, about – all set!",
+            "💡 Pro tip: Hover over any image card to see smooth animation effects.",
+            "🎉 You're one click away from exploring amazing features – try the gallery!"
+        ];
+
+        function showRandomFact() {
+            const randomIdx = Math.floor(Math.random() * funFacts.length);
+            showFloatingMessage(funFacts[randomIdx]);
+        }
+
+        // Smooth explore gallery button - scroll to gallery + highlight
+        function scrollToGallery() {
+            const gallerySection = document.getElementById('gallery');
+            if (gallerySection) {
+                gallerySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                // add temporary highlight effect
+                gallerySection.style.transition = 'all 0.3s';
+                gallerySection.style.backgroundColor = '#fef9c3';
+                setTimeout(() => {
+                    gallerySection.style.backgroundColor = 'transparent';
+                }, 800);
+            } else {
+                showFloatingMessage("Gallery loading smoothly...");
+            }
+        }
+
+        // also add an additional "dynamic" loading for images by checking for broken images and replace fallback 
+        function handleImageErrors() {
+            const images = document.querySelectorAll('.image-card img');
+            images.forEach(img => {
+                img.addEventListener('error', function() {
+                    this.src = "https://images.pexels.com/photos/34950/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=600";
+                    this.alt = "fallback dynamic image";
+                });
+            });
+        }
+
+        // observe image grid changes for fallback (since we render after load)
+        const observer = new MutationObserver(() => {
+            handleImageErrors();
+        });
+        
+        // initial render and stats
+        function init() {
+            renderImageGrid();
+            updateStatsDynamically();
+            // randomize stats every 20 seconds just for dynamic feel
+            setInterval(() => {
+                updateStatsDynamically();
+            }, 20000);
+            // attach event handlers
+            const exploreBtn = document.getElementById('exploreBtn');
+            if (exploreBtn) exploreBtn.addEventListener('click', (e) => { e.preventDefault(); scrollToGallery(); });
+            const factBtn = document.getElementById('randomFactBtn');
+            if (factBtn) factBtn.addEventListener('click', (e) => { e.preventDefault(); showRandomFact(); });
+            // additional dynamic background effect for nav links (just for liveliness)
+            handleImageErrors();
+            // set up observer on dynamic grid container
+            const container = document.getElementById('dynamicImageGrid');
+            if (container) observer.observe(container, { childList: true, subtree: true });
+            
+            // add a small dynamic welcome message console but also friendly toast on load
+            setTimeout(() => {
+                showFloatingMessage("✨ Welcome back! Interactive gallery ready ✨");
+            }, 800);
+        }
+        
+        // preserve Django template url behavior: the hrefs are already pointing to actual url names, so they remain fully functional.
+        // Additional micro interaction: interactive stat cards
+        const statItems = document.querySelectorAll('.stat-item');
+        if(statItems.length) {
+            statItems.forEach(stat => {
+                stat.addEventListener('click', () => {
+                    showFloatingMessage("📊 Dynamic stats auto-update every 20 seconds!");
+                });
+            });
+        }
+        
+        init();
+    </script>
+</body>
+</html>

@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>contact | Nexus Connect</title>
+    <link rel="icon" href="{% static "images/images(1).jpg" %}">
+    <!-- Google Fonts + Font Awesome 6 (for modern icons and attractive design) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(125deg, #fef9f0 0%, #f2f5fc 100%);
+            color: #0f172a;
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* glassmorphic navigation (preserves all original links) */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(14px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255,255,240,0.8);
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-area i {
+            font-size: 1.8rem;
+            background: linear-gradient(145deg, #1e293b, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .brand {
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: -0.3px;
+            background: linear-gradient(135deg, #0f172a, #2563eb);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.8rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 600;
+            color: #1e293b;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 0;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-links a i {
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: #2563eb;
+            border-bottom-color: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        /* main contact container */
+        .contact-container {
+            max-width: 1280px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            flex: 1;
+        }
+
+        /* hero header with dynamic styling */
+        .contact-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeSlideUp 0.5s ease forwards;
+        }
+
+        .contact-header h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            background: linear-gradient(145deg, #0f2b3d, #3b82f6, #c2410c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .contact-header p {
+            font-size: 1.1rem;
+            color: #475569;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        /* dynamic grid: contact cards + interactive google images style */
+        .contact-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .contact-info-card {
+            flex: 1.2;
+            min-width: 260px;
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(4px);
+            border-radius: 2rem;
+            padding: 2rem;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.08);
+            transition: all 0.25s;
+            border: 1px solid rgba(255,255,255,0.6);
+        }
+
+        .contact-info-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 28px 32px -16px rgba(0, 0, 0, 0.12);
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.8rem;
+        }
+
+        .info-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: #2563eb;
+        }
+
+        .info-text h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .info-text p {
+            color: #334155;
+        }
+
+        .social-links {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-icon {
+            background: #f1f5f9;
+            width: 44px;
+            height: 44px;
+            border-radius: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            color: #1e293b;
+            font-size: 1.3rem;
+            text-decoration: none;
+        }
+
+        .social-icon:hover {
+            background: #2563eb;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* image gallery section (Google images style) */
+        .gallery-card-section {
+            flex: 1;
+            min-width: 280px;
+            background: white;
+            border-radius: 2rem;
+            overflow: hidden;
+            box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s;
+        }
+
+        .gallery-title {
+            background: #0f172a;
+            color: white;
+            padding: 1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .image-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px;
+            padding: 4px;
+        }
+
+        .image-showcase img {
+            width: 100%;
+            height: 130px;
+            object-fit: cover;
+            transition: transform 0.3s, filter 0.2s;
+            cursor: pointer;
+            border-radius: 16px;
+        }
+
+        .image-showcase img:hover {
+            transform: scale(1.02);
+            filter: brightness(1.02);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+
+        /* map / dynamic location card */
+        .location-card {
+            background: white;
+            border-radius: 2rem;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 12px 24px -12px rgba(0,0,0,0.06);
+        }
+
+        .location-text {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .location-text i {
+            font-size: 2rem;
+            color: #3b82f6;
+        }
+
+        .dynamic-btn {
+            background: linear-gradient(95deg, #2563eb, #1d4ed8);
+            border: none;
+            padding: 12px 28px;
+            border-radius: 40px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dynamic-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        /* floating contact tip banner */
+        .contact-tip {
+            background: #fef9c3;
+            border-radius: 60px;
+            padding: 0.8rem 1.5rem;
+            text-align: center;
+            font-weight: 500;
+            font-size: 0.85rem;
+            margin-top: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        @keyframes fadeSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-up {
+            animation: fadeSlideUp 0.5s ease forwards;
+        }
+
+        .footer-note {
+            text-align: center;
+            padding: 1.8rem;
+            margin-top: 2rem;
+            color: #64748b;
+            font-size: 0.8rem;
+            border-top: 1px solid rgba(0,0,0,0.04);
+        }
+
+        @media (max-width: 780px) {
+            .contact-header h1 {
+                font-size: 2.3rem;
+            }
+            .nav-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .contact-grid {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation: exactly preserving original url tags: home, register, index, about -->
+    <nav class="glass-nav">
+        <div class="nav-container">
+            <div class="logo-area">
+                <i class="fas fa-headset"></i>
+                <span class="brand">ConnectHub</span>
+            </div>
+            <div class="nav-links">
+                <a href="{% url 'home' %}"><i class="fas fa-home"></i> home</a>
+                <a href="{% url 'register' %}"><i class="fas fa-user-plus"></i> register</a>
+                <a href="{% url 'index' %}"><i class="fas fa-chart-line"></i> index</a>
+                <a href="{% url 'about' %}"><i class="fas fa-info-circle"></i> about</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="contact-container">
+        <!-- dynamic header -->
+        <div class="contact-header fade-up">
+            <h1><i class="fas fa-envelope-open-text"></i> welcome to contact</h1>
+            <p>Let's connect — we’re one message away. Reach out for collaborations, support or just to say hello.</p>
+        </div>
+
+        <!-- main grid: contact info + google images style gallery (high quality references) -->
+        <div class="contact-grid">
+            <!-- left side: contact channels & socials -->
+            <div class="contact-info-card fade-up" style="animation-delay: 0.1s;">
+                <div class="info-item">
+                    <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div class="info-text">
+                        <h3>Visit us</h3>
+                        <p>123 Creative Lane, Digital City, DC 90210</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon"><i class="fas fa-phone-alt"></i></div>
+                    <div class="info-text">
+                        <h3>Call directly</h3>
+                        <p>+1 (800) 456-7890</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon"><i class="fas fa-paper-plane"></i></div>
+                    <div class="info-text">
+                        <h3>Email us</h3>
+                        <p>hello@connecthub.com</p>
+                    </div>
+                </div>
+                <div class="social-links">
+                    <a href="#" class="social-icon" id="instaLink"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon" id="twitterLink"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon" id="linkedinLink"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="social-icon" id="githubLink"><i class="fab fa-github"></i></a>
+                </div>
+                <div class="contact-tip" id="dynamicTip">
+                    <i class="fas fa-lightbulb"></i> <span>Click any social icon for a surprise greeting ✨</span>
+                </div>
+            </div>
+
+            <!-- right side: dynamic image gallery (Google Images style high-res) -->
+            <div class="gallery-card-section fade-up" style="animation-delay: 0.2s;">
+                <div class="gallery-title">
+                    <i class="fas fa-images"></i> visual inspiration
+                    <span style="font-size: 0.7rem; background:#334155; padding:2px 10px; border-radius:40px;">Google images style</span>
+                </div>
+                <div class="image-showcase" id="dynamicImageGallery">
+                    <!-- images will be injected dynamically (high quality references) -->
+                </div>
+                <div style="padding: 0.8rem; text-align: center; font-size: 0.7rem; color: #475569;">
+                    <i class="fas fa-camera-retro"></i> trending courts & creative spaces
+                </div>
+            </div>
+        </div>
+
+        <!-- location based dynamic interaction + google maps style placeholder -->
+        <div class="location-card fade-up" style="animation-delay: 0.2s;">
+            <div class="location-text">
+                <i class="fas fa-map-marked-alt"></i>
+                <div>
+                    <strong>📍 Our HQ (dynamic studio)</strong><br>
+                    <span style="font-size: 0.85rem;">Available for virtual & in-person meetings</span>
+                </div>
+            </div>
+            <button class="dynamic-btn" id="directionBtn"><i class="fas fa-directions"></i> get directions (demo)</button>
+        </div>
+
+        <!-- extra dynamic message board -->
+        <div class="contact-tip fade-up" style="background:#e0f2fe; justify-content: space-between; flex-wrap:wrap;" id="funFactBanner">
+            <span><i class="fas fa-comment-dots"></i> 💬 "Our team replies within 24 hours — we value every connection."</span>
+            <span id="randomFactTrigger" style="cursor:pointer; font-weight:700;"><i class="fas fa-sync-alt"></i> random tip</span>
+        </div>
+    </div>
+
+    <div class="footer-note">
+        <i class="fas fa-envelope"></i> contact page · dynamic visuals | reach out anytime
+    </div>
+
+    <script>
+        // ---------- DYNAMIC IMAGE GALLERY (Google Images style references) ----------
+        // High-quality images from free sources (sports, collaboration, creative)
+        const galleryImages = [
+            "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop",
+            "https://images.pexels.com/photos/2099779/pexels-photo-2099779.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop",
+            "https://images.pexels.com/photos/260024/pexels-photo-260024.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop",
+            "https://images.pexels.com/photos/1752757/pexels-photo-1752757.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop"
+        ];
+
+        const galleryAlt = ["creative workspace", "court booking", "tennis action", "streetball vibes"];
+
+        function renderImageGallery() {
+            const galleryContainer = document.getElementById('dynamicImageGallery');
+            if (!galleryContainer) return;
+            galleryContainer.innerHTML = '';
+            galleryImages.forEach((imgUrl, idx) => {
+                const img = document.createElement('img');
+                img.src = imgUrl;
+                img.alt = galleryAlt[idx % galleryAlt.length];
+                img.loading = 'lazy';
+                img.addEventListener('click', () => {
+                    showFloatingToast(`✨ "${galleryAlt[idx]}" — visual inspiration from our creative moodboard.`);
+                });
+                // error fallback for broken images
+                img.addEventListener('error', () => {
+                    img.src = "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop";
+                });
+                galleryContainer.appendChild(img);
+            });
+        }
+
+        // floating message helper (attractive & modern)
+        function showFloatingToast(msg) {
+            const existingToast = document.querySelector('.dynamic-toast-msg');
+            if(existingToast) existingToast.remove();
+            const toast = document.createElement('div');
+            toast.className = 'dynamic-toast-msg';
+            toast.innerText = msg;
+            toast.style.position = 'fixed';
+            toast.style.bottom = '30px';
+            toast.style.left = '50%';
+            toast.style.transform = 'translateX(-50%)';
+            toast.style.backgroundColor = '#0f172a';
+            toast.style.color = 'white';
+            toast.style.padding = '12px 24px';
+            toast.style.borderRadius = '60px';
+            toast.style.fontWeight = '500';
+            toast.style.fontSize = '0.85rem';
+            toast.style.zIndex = '2000';
+            toast.style.backdropFilter = 'blur(12px)';
+            toast.style.backgroundColor = 'rgba(15, 23, 42, 0.92)';
+            toast.style.fontFamily = 'Inter, sans-serif';
+            toast.style.pointerEvents = 'none';
+            toast.style.boxShadow = '0 10px 18px rgba(0,0,0,0.2)';
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 2200);
+        }
+
+        // social media interactive dynamic
+        function setupSocialInteractions() {
+            const socials = [
+                { id: 'instaLink', name: 'Instagram', message: '📸 Follow us for daily creative inspiration & updates!' },
+                { id: 'twitterLink', name: 'Twitter', message: '🐦 Join the conversation — we share tech & design insights.' },
+                { id: 'linkedinLink', name: 'LinkedIn', message: '💼 Let’s grow together! Connect on LinkedIn for opportunities.' },
+                { id: 'githubLink', name: 'GitHub', message: '🐙 Explore our open-source projects on GitHub.' }
+            ];
+            socials.forEach(social => {
+                const btn = document.getElementById(social.id);
+                if (btn) {
+                    btn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        showFloatingToast(`${social.message} ✨`);
+                    });
+                }
+            });
+        }
+
+        // random tip updater for the fun banner
+        const tipsArray = [
+            "💡 Did you know? We respond to inquiries within 2 hours on business days.",
+            "🎨 Our gallery images are curated from high-resolution free sources (Google Images aesthetic).",
+            "📞 You can also reach us via WhatsApp: +1 (800) 555-0199.",
+            "🌟 We've helped over 1,200+ clients optimize their digital journey.",
+            "🏀 Book a court or schedule a call — we're here to connect."
+        ];
+        
+        function setupRandomTip() {
+            const randomSpan = document.getElementById('randomFactTrigger');
+            const tipBannerText = document.querySelector('#funFactBanner span:first-child');
+            if (randomSpan && tipBannerText) {
+                randomSpan.addEventListener('click', () => {
+                    const randomIdx = Math.floor(Math.random() * tipsArray.length);
+                    tipBannerText.innerHTML = `<i class="fas fa-comment-dots"></i> ${tipsArray[randomIdx]}`;
+                    showFloatingToast("✨ New tip activated!");
+                });
+            }
+        }
+
+        // direction button dynamic behavior
+        function setupDirectionBtn() {
+            const dirBtn = document.getElementById('directionBtn');
+            if (dirBtn) {
+                dirBtn.addEventListener('click', () => {
+                    showFloatingToast("📍 123 Creative Lane, Digital City — interactive map demo. We'd love to meet you!");
+                });
+            }
+        }
+
+        // dynamic hover effect on contact cards & additional bonus: animated stats placeholder (optional greeting)
+        function addCardMicroInteractions() {
+            const contactCard = document.querySelector('.contact-info-card');
+            if (contactCard) {
+                contactCard.addEventListener('mouseenter', () => {
+                    const tipDiv = document.getElementById('dynamicTip');
+                    if (tipDiv && tipDiv.innerHTML.includes('surprise')) {
+                        tipDiv.innerHTML = `<i class="fas fa-smile-wink"></i> <span>Glad you're here! Use any contact method ✨</span>`;
+                        setTimeout(() => {
+                            if(tipDiv) tipDiv.innerHTML = `<i class="fas fa-lightbulb"></i> <span>Click any social icon for a surprise greeting ✨</span>`;
+                        }, 3000);
+                    }
+                });
+            }
+        }
+
+        // show welcome toast for contact page
+        function showWelcomeMessage() {
+            setTimeout(() => {
+                showFloatingToast("👋 Hey there! Welcome to the contact hub — we're excited to connect.");
+            }, 600);
+        }
+
+        // dynamic image fallback and final init
+        function initContactPage() {
+            renderImageGallery();
+            setupSocialInteractions();
+            setupRandomTip();
+            setupDirectionBtn();
+            addCardMicroInteractions();
+            showWelcomeMessage();
+
+            // additional dynamic: year in footer
+            const footer = document.querySelector('.footer-note');
+            if (footer) {
+                const year = new Date().getFullYear();
+                footer.innerHTML = `<i class="fas fa-envelope"></i> contact page · dynamic visuals | reach out anytime — ${year}`;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', initContactPage);
+    </script>
+</body>
+</html>
